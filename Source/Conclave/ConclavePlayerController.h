@@ -33,9 +33,9 @@ public:
 	UNiagaraSystem* FXCursor;
 
 	/** MappingContext */
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
-	UPROPERTY(BlueprintReadOnly)
-	UInputMappingContext* IMC_Player;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	//UPROPERTY(BlueprintReadOnly)
+	 UInputMappingContext* IMC_Player;
 	
 	/** Jump Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
@@ -47,9 +47,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	UInputAction* SetDestinationTouchAction;*/
 
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 
-	UPROPERTY(BlueprintReadOnly)
+	//UPROPERTY(BlueprintReadOnly)
 	UInputAction* MoveAction;
 
 

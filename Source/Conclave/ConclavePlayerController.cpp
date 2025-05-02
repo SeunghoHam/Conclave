@@ -23,6 +23,7 @@ AConclavePlayerController::AConclavePlayerController()
 	CachedDestination = FVector::ZeroVector;
 	FollowTime = 0.f;
 
+
 	/*
 	ConstructorHelpers::FObjectFinder<UInputMappingContext> _IMC(TEXT("/Game/Input/IMC_Player"));
 	ConstructorHelpers::FObjectFinder<UInputAction> _IA_Move(TEXT("/Game/Input/Actions/IA_Move"));
@@ -56,10 +57,12 @@ void AConclavePlayerController::SetupInputComponent()
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent))
 	{
 		// Setup mouse input events
+		/*
 		EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Started, this, &AConclavePlayerController::OnInputStarted);
 		EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Triggered, this, &AConclavePlayerController::OnSetDestinationTriggered);
 		EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Completed, this, &AConclavePlayerController::OnSetDestinationReleased);
 		EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Canceled, this, &AConclavePlayerController::OnSetDestinationReleased);
+		*/
 
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AConclavePlayerController::OnMove);
 
