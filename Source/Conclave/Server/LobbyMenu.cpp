@@ -106,6 +106,7 @@ void ULobbyMenu::JoinServer()
 
 void ULobbyMenu::OpenHostMenu()
 {
+	UE_LOG(LogTemp, Warning, TEXT("OpenHostMenu"));
 	if (WidgetSwitcher == nullptr) return;
 	WidgetSwitcher->SetActiveWidget(HostMenu);
 }
@@ -113,7 +114,7 @@ void ULobbyMenu::OpenHostMenu()
 void ULobbyMenu::OpenJoinMenu()
 {
 	if (WidgetSwitcher == nullptr) return;
-	if (LobbyInterface == nullptr) return;
+	//if (LobbyInterface == nullptr) return;
 	WidgetSwitcher->SetActiveWidget(JoinMenuButton);
 	if (LobbyInterface!= nullptr) {
 		LobbyInterface->RefreshServerList();
@@ -124,7 +125,9 @@ void ULobbyMenu::OpenJoinMenu()
 // 기본창으로 변경
 void ULobbyMenu::OpenDefaultMenu()
 {
-	
+	if (WidgetSwitcher == nullptr) return;
+	if (MainMenu == nullptr) return;
+	WidgetSwitcher->SetActiveWidget(MainMenu);
 }
 
 void ULobbyMenu::QuitPressed()
