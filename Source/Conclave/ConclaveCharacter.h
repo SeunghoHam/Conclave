@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "ConclaveCharacter.generated.h"
 
+class UInventory;
 UCLASS(Blueprintable)
 class AConclaveCharacter : public ACharacter
 {
@@ -30,5 +31,17 @@ private:
 	/** Camera boom positioning the camera above the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, Category = "Item")
+	void AddItemToWidget(FItemData ItemData);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UInventory> Inventory;
+
+	UFUNCTION()
+	void CharacterInteract();
+private:
+	//FItemData Inventory_AddItem();
 };
 

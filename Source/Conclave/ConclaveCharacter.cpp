@@ -11,6 +11,9 @@
 #include "Materials/Material.h"
 #include "Engine/World.h"
 
+#include "CharacterComponent/Inventory.h"
+
+
 AConclaveCharacter::AConclaveCharacter()
 {
 	// Set size for player capsule
@@ -43,9 +46,24 @@ AConclaveCharacter::AConclaveCharacter()
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+
+	Inventory = CreateDefaultSubobject<UInventory>(TEXT("Inventory"));
+	
 }
 
 void AConclaveCharacter::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
+
+	if (Inventory != nullptr) Inventory->AttachCharacter(this);
+}
+
+void AConclaveCharacter::CharacterInteract()
+{
+	if (Inventory == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("inventory null"));
+		return;
+	}
+	Inventory->Interfact();
 }

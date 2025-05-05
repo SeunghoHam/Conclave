@@ -62,7 +62,8 @@ bool ULobbyMenu::Initialize()
 
 	if (HostMenuButton != nullptr)
 		HostMenuButton->OnClicked.AddDynamic(this, &ULobbyMenu::OpenHostMenu);
-	if(JoinMenuButton != nullptr)
+
+	if (JoinMenuButton != nullptr)
 		JoinMenuButton->OnClicked.AddDynamic(this, &ULobbyMenu::OpenJoinMenu);
 
 	if (ConfirmHostButton != nullptr)
@@ -83,15 +84,22 @@ bool ULobbyMenu::Initialize()
 // 서버 활성화는 인터페이스에서
 void ULobbyMenu::HostServer()
 {
-	if (LobbyInterface != nullptr)
+	UE_LOG(LogTemp, Warning, TEXT("HostServer"));
+	if (LobbyInterface == nullptr)
 	{
-		FString ServerName = ServerHostName->Text.ToString();
-		LobbyInterface->Host(ServerName);
-	}
+		UE_LOG(LogTemp, Warning, TEXT("Lobby Interface Null"));
+		return;
+	}	
+
+
+	UE_LOG(LogTemp, Warning, TEXT("LobbyMenu::HoserServer"));
+	FString ServerName = ServerHostName->Text.ToString();
+	LobbyInterface->Host(ServerName);
 }
 
 void ULobbyMenu::JoinServer()
 {
+	UE_LOG(LogTemp, Warning, TEXT("JoinServer"));
 	// 선택된 인덱스(서버 번호) 가 있어야 접속되게
 	if (SelectedIndex.IsSet() && LobbyInterface != nullptr)
 	{
@@ -113,12 +121,18 @@ void ULobbyMenu::OpenHostMenu()
 
 void ULobbyMenu::OpenJoinMenu()
 {
+	UE_LOG(LogTemp, Display, TEXT("TryOpenJoinMenu"));
 	if (WidgetSwitcher == nullptr) return;
 	//if (LobbyInterface == nullptr) return;
 	WidgetSwitcher->SetActiveWidget(JoinMenuButton);
-	if (LobbyInterface!= nullptr) {
-		LobbyInterface->RefreshServerList();
+	if (LobbyInterface == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT(" 'OpenJoniMenu::LobbyInteface = null"));
+		return;
 	}
+	UE_LOG(LogTemp, Warning, TEXT(" RefreshServerList"));
+
+	LobbyInterface->RefreshServerList();
 }
 
 

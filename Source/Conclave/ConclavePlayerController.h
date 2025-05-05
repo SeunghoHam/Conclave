@@ -43,16 +43,18 @@ public:
 
 	UInputAction* SetDestinationClickAction;
 
-	/** Jump Input Action 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
-	UInputAction* SetDestinationTouchAction;*/
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 
 	//UPROPERTY(BlueprintReadOnly)
 	UInputAction* MoveAction;
 
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* InteractAction;
+
+
+	UFUNCTION(BlueprintCallable)
+	void CameraSettingChange();
 	
 
 protected:
@@ -67,19 +69,11 @@ protected:
 	// To add mapping context
 	virtual void BeginPlay();
 
-	/** Input handlers for SetDestination action. */
-	void OnInputStarted();
-	void OnSetDestinationTriggered();
-	void OnSetDestinationReleased();
-	void OnTouchTriggered();
-	void OnTouchReleased();
+private:
+	//TObjectPtr<AConclaveCharacter> Character;
 
 	void OnMove(const FInputActionValue& Value);
-private:
-	FVector CachedDestination;
-
-	bool bIsTouch; // Is it a touch device
-	float FollowTime; // For how long it has been pressed
+	void OnInteract();
 };
 
 

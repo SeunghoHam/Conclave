@@ -5,6 +5,7 @@
 
 void ULobbyWidget::Setup()
 {	
+	UE_LOG(LogTemp, Display, TEXT("LobbyWidget -Setup"));
 	this->AddToViewport();
 
 	UWorld* World = GetWorld();
@@ -20,11 +21,11 @@ void ULobbyWidget::Setup()
 	PlayerController->SetInputMode(InputModeData);
 
 	PlayerController->bShowMouseCursor = true;
-
 }
 
 void ULobbyWidget::TearDown()
 {
+	UE_LOG(LogTemp, Display, TEXT("LobbyWidget - TearDown"));
 	this->RemoveFromViewport();
 
 	UWorld* World = GetWorld();
@@ -40,7 +41,8 @@ void ULobbyWidget::TearDown()
 	PlayerController->bShowMouseCursor = false;
 }
 
-void ULobbyWidget::SetLobbyInterface(ILobbyInterface* _LobbyInterface)
+void ULobbyWidget::SetLobbyInterface(ILobbyInterface* _lobbyInterface)
 {
-	LobbyInterface = LobbyInterface;
+	UE_LOG(LogTemp, Display, TEXT("SetLobbyInterface"));
+	this->LobbyInterface = _lobbyInterface;
 }

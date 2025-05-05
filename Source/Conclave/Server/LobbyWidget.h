@@ -22,9 +22,9 @@ public:
 	// 게임상태로 돌아가는건데 명칭 바꾸는게 좋을듯
 	void TearDown();
 
-	void SetLobbyInterface(ILobbyInterface* _LobbyInterface);
+	void SetLobbyInterface(ILobbyInterface* _lobbyInterface);
 protected:
 
 	ILobbyInterface* LobbyInterface;
-
+	//TObjectPtr<ILobbyInterface> LobbyInterface;
 };

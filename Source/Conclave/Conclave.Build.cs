@@ -11,5 +11,9 @@ public class Conclave : ModuleRules
         PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "NavigationSystem", "AIModule", "Niagara", "EnhancedInput", 
 			"UMG",
 			"OnlineSubsystem", "OnlineSubsystemSteam", "OnlineSubsystemUtils" });
+
+		PrivateIncludePaths.Add("Conclave");
+		PrivateIncludePaths.Add("Conclave/Actor");
+		PrivateIncludePaths.Add("Conclave/CharacterComponent");
     }
 }

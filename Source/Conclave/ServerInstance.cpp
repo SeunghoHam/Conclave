@@ -36,6 +36,8 @@ UServerInstance::UServerInstance()
 
 void UServerInstance::Init()
 {
+	Super::Init();
+	UE_LOG(LogTemp, Display, TEXT("Instance Init"));
 	IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get();
 	if (Subsystem != nullptr) {
 		UE_LOG(LogTemp, Warning, TEXT("Found subsystem %s"), *Subsystem->GetSubsystemName().ToString());
@@ -48,7 +50,7 @@ void UServerInstance::Init()
 		}
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("Found no subsystem"));
+		UE_LOG(LogTemp, Warning, TEXT("No found subsystem"));
 	}
 
 	if (GEngine != nullptr)
@@ -61,10 +63,19 @@ void UServerInstance::Init()
 void UServerInstance::LoadMenuWidget()
 {
 	// 로비위젯이 있다면 설정하기
-	if (!ensure(LobbyClass != nullptr)) return;
-
+	//if (!ensure(LobbyClass != nullptr)) return;
+	if (LobbyClass == nullptr) {
+		UE_LOG(LogTemp, Display, TEXT("LobbyClass = null"));
+		return;
+	}
 	Lobby = CreateWidget<ULobbyMenu>(this, LobbyClass);
-	if (!ensure(Lobby != nullptr)) return;
+
+	//if (!ensure(Lobby != nullptr)) return;
+	if (Lobby == nullptr)
+	{
+		UE_LOG(LogTemp, Display, TEXT("LobbyWidget = null"));
+		return;
+	}
 
 	
 	Lobby->Setup();
@@ -87,6 +98,8 @@ void UServerInstance::InGameLoadMenu()
 
 void UServerInstance::Host(FString ServerName)
 {
+
+	GEngine->AddOnScreenDebugMessage(0, 5, FColor::Yellow, FString::Printf(TEXT("Interface::Host")));
 	// 입력된 ServerName을 저장하고 cpp 위에 설정한 "Game" 이름으로 세션 생성하기
 	DesiredServerName = ServerName;
 	if (SessionInterface.IsValid())
@@ -94,10 +107,12 @@ void UServerInstance::Host(FString ServerName)
 		auto ExistingSession = SessionInterface->GetNamedSession(SESSION_NAME);
 		if (ExistingSession != nullptr)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Session Destroy"));
 			SessionInterface->DestroySession(SESSION_NAME);
 		}
 		else
 		{
+			UE_LOG(LogTemp, Warning, TEXT("SessionCreate"));
 			CreateSession();
 		}
 	}
