@@ -30,11 +30,17 @@ void AConclavePlayerController::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
+	SightType = EPlayerSightType::ThirdSight;
+
+	FInputModeGameOnly InputModeData;
+	SetInputMode(InputModeData);
+	bShowMouseCursor = false;
 }
 
-void AConclavePlayerController::CameraSettingChange()
-{
 
+void AConclavePlayerController::ChangeSightType(EPlayerSightType _type)
+{
+	SightType = _type;
 }
 
 void AConclavePlayerController::SetupInputComponent()
@@ -53,6 +59,8 @@ void AConclavePlayerController::SetupInputComponent()
 	{
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AConclavePlayerController::OnMove);
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AConclavePlayerController::OnInteract);
+
+		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AConclavePlayerController::OnLook);
 	}
 	else
 	{
@@ -62,7 +70,10 @@ void AConclavePlayerController::SetupInputComponent()
 
 void AConclavePlayerController::OnMove(const FInputActionValue& Value)
 {
-	FVector2D MovementVector = Value.Get<FVector2D>();
+	if (SightType == EPlayerSightType::TopDown)
+	{
+		//UE_LOG(LogTemp, Display, TEXT("TopDown Movement"));
+		FVector2D MovementVector = Value.Get<FVector2D>();
 
 		// find out which way is forward
 		const FRotator Rotation = GetControlRotation();
@@ -77,11 +88,60 @@ void AConclavePlayerController::OnMove(const FInputActionValue& Value)
 		// add movement
 		GetCharacter()->AddMovementInput(ForwardDirection, MovementVector.Y);
 		GetCharacter()->AddMovementInput(RightDirection, MovementVector.X);
+	}
+	else if (SightType == EPlayerSightType::ThirdSight)
+	{
+		//UE_LOG(LogTemp, Display, TEXT("ThirdSight Movement"));
+		FVector2D MovementVector = Value.Get<FVector2D>();
+
+
+			// find out which way is forward
+			const FRotator Rotation = GetControlRotation();
+			const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+			// get forward vector
+			const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+			// get right vector 
+			const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+			// add movement 
+			GetCharacter()->AddMovementInput(ForwardDirection, MovementVector.Y);
+			GetCharacter()->AddMovementInput(RightDirection, MovementVector.X);
+	}
+	else if (SightType == EPlayerSightType::FirstSight)
+	{
+		FVector2D MovementVector = Value.Get<FVector2D>();
+		//GetCharacter()->AddMovementInput(Cast<AConclaveCharacter>(GetCharacter())->GetForwardVector(), MovementVector.Y);
+		//GetCharacter()->AddMovementInput(Cast<AConclaveCharacter>(GetCharacter())->GetRightVector(), MovementVector.X);
+		GetCharacter()->AddMovementInput(GetCharacter()->GetActorForwardVector(), MovementVector.Y);
+		GetCharacter()->AddMovementInput(GetCharacter()->GetActorRightVector(), MovementVector.X);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Display, TEXT("nanimo nakat ta!"));
+	}
+
 }
 
 void AConclavePlayerController::OnInteract()
 {
-	//if(Character != nullptr)
-	AConclaveCharacter* cha = Cast<AConclaveCharacter>(GetCharacter());
-	cha->CharacterInteract();
+	//AConclaveCharacter* cha = Cast<AConclaveCharacter>(GetCharacter());
+	Cast<AConclaveCharacter>(GetCharacter())->CharacterInteract();
+	//cha->CharacterInteract();
+}
+
+void AConclavePlayerController::OnLook(const FInputActionValue& Value)
+{
+	// input is a Vector2D'
+	if (SightType == EPlayerSightType::TopDown) return;
+
+	FVector2D LookAxisVector = Value.Get<FVector2D>();
+
+	//UE_LOG(LogTemp, Warning, TEXT("Value x : %f,Value y : %f"), LookAxisVector.X, LookAxisVector.Y);
+
+		// add yaw and pitch input to controller
+	GetCharacter()->AddControllerYawInput(LookAxisVector.X);
+	GetCharacter()->AddControllerPitchInput(LookAxisVector.Y);
+	
 }

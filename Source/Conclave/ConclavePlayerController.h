@@ -8,6 +8,15 @@
 //#include "InputActionValue.h" // FInputActionValue 등
 #include "ConclavePlayerController.generated.h"
 
+
+UENUM()
+enum class EPlayerSightType  : uint8 // uint8 으로 크기 제한해두기
+{
+
+	TopDown UMETA(DisplayName = "TopDown"),
+	FirstSight UMETA(DisplayName = "FirstSight"),
+	ThirdSight UMETA(DisplayName = "ThirdSight")
+};
 /** Forward declaration to improve compiling times */
 class UNiagaraSystem;
 class UInputMappingContext;
@@ -48,13 +57,17 @@ public:
 	//UPROPERTY(BlueprintReadOnly)
 	UInputAction* MoveAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* LookAction;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* InteractAction;
 
+	
 
-	UFUNCTION(BlueprintCallable)
-	void CameraSettingChange();
+	UFUNCTION()
+	void ChangeSightType(EPlayerSightType _type);
 	
 
 protected:
@@ -70,10 +83,27 @@ protected:
 	virtual void BeginPlay();
 
 private:
+	EPlayerSightType SightType;
+
 	//TObjectPtr<AConclaveCharacter> Character;
 
 	void OnMove(const FInputActionValue& Value);
 	void OnInteract();
+
+
+	// ThirdPerson
+	/** Called for movement input */
+	//void Move(const FInputActionValue& Value);
+
+	/** Called for looking input */
+	void OnLook(const FInputActionValue& Value);
+
+	/*
+	UFUNCTION()
+	void SetFirstSight();
+
+	UFUNCTION()
+	void SetTopDown();*/
 };
 
 
