@@ -168,6 +168,17 @@ void AConclaveCharacter::CharacterInteract()
 	Inventory->Interfact();
 }
 
+void AConclaveCharacter::MeleeAttack()
+{
+	bIsAttacking = true;
+}
+
+void AConclaveCharacter::SetAttack(bool _value)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Set Attack %d"), _value);
+	bIsAttacking = _value;
+}
+
 void AConclaveCharacter::InitTopDownCamera()
 {
 	// Create a camera boom...

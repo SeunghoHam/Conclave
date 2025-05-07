@@ -64,6 +64,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* InteractAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* AttackAction;
+
 	
 
 	UFUNCTION()
@@ -97,6 +100,8 @@ private:
 
 	/** Called for looking input */
 	void OnLook(const FInputActionValue& Value);
+
+	void OnAttack();
 
 	/*
 	UFUNCTION()

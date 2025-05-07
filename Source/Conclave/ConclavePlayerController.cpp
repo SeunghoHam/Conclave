@@ -61,6 +61,8 @@ void AConclavePlayerController::SetupInputComponent()
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AConclavePlayerController::OnInteract);
 
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AConclavePlayerController::OnLook);
+
+		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &AConclavePlayerController:: OnAttack);
 	}
 	else
 	{
@@ -144,4 +146,10 @@ void AConclavePlayerController::OnLook(const FInputActionValue& Value)
 	GetCharacter()->AddControllerYawInput(LookAxisVector.X);
 	GetCharacter()->AddControllerPitchInput(LookAxisVector.Y);
 	
+}
+
+void AConclavePlayerController::OnAttack()
+{
+	UE_LOG(LogTemp, Display, TEXT("OnAttack"));
+	Cast<AConclaveCharacter>(GetCharacter())->SetAttack(true);
 }

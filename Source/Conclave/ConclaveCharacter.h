@@ -73,11 +73,24 @@ public:
 
 	UFUNCTION()
 	void CharacterInteract();
+
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	void MeleeAttack();
+
+	UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Combat")
+	bool GetIsAttacking() { return bIsAttacking; }
+
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	void SetAttack(bool _value) ;
+
 private:
 	//FItemData Inventory_AddItem();
 
 	void InitTopDownCamera();
 	void InitThirdCamera();
 	void InitFirstCamera();
+
+	UPROPERTY()
+	bool bIsAttacking;
 };
 
