@@ -15,5 +15,6 @@ public class Conclave : ModuleRules
 		PrivateIncludePaths.Add("Conclave");
 		PrivateIncludePaths.Add("Conclave/Actor");
 		PrivateIncludePaths.Add("Conclave/CharacterComponent");
+		PrivateIncludePaths.Add("Conclave/Animation");
     }
 }

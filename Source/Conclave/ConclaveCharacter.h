@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+
+
 #include "ConclaveCharacter.generated.h"
 
 #define DEFAULT_SETTING UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -11,6 +13,7 @@
 class UInventory;
 class UCameraComponent;
 class USpringArmComponent;
+class UCharacterAnimInstance;
 //class AThirdCameraActor;
 //class AFirstCameraActor;
 UCLASS(Blueprintable)
@@ -21,6 +24,7 @@ class AConclaveCharacter : public ACharacter
 public:
 	AConclaveCharacter();
 
+	virtual void BeginPlay() override;
 	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
 
@@ -74,15 +78,15 @@ public:
 	UFUNCTION()
 	void CharacterInteract();
 
-	UFUNCTION(BlueprintCallable, Category = "Combat")
-	void MeleeAttack();
+	void TryAttack();
 
-	UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Combat")
-	bool GetIsAttacking() { return bIsAttacking; }
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "AnimNotify")
+	void TriggerAttackStart();
 
-	UFUNCTION(BlueprintCallable, Category = "Combat")
-	void SetAttack(bool _value) ;
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "AnimNotify")
+	void TriggerAttackEnd();
 
+	void ResetAnimState();
 private:
 	//FItemData Inventory_AddItem();
 
@@ -90,7 +94,7 @@ private:
 	void InitThirdCamera();
 	void InitFirstCamera();
 
-	UPROPERTY()
-	bool bIsAttacking;
+
+	UCharacterAnimInstance* AnimInstance;
 };
 

@@ -13,6 +13,7 @@
 //class AConclaveCharacter;
 class AWeaponBase;
 
+// (type, parameter)
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPickUp, AConclaveCharacter*, character); // 픽업 델리게이트 호출
 
 UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))

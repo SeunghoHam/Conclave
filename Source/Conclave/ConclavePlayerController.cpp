@@ -150,6 +150,7 @@ void AConclavePlayerController::OnLook(const FInputActionValue& Value)
 
 void AConclavePlayerController::OnAttack()
 {
-	UE_LOG(LogTemp, Display, TEXT("OnAttack"));
-	Cast<AConclaveCharacter>(GetCharacter())->SetAttack(true);
+	//GEngine->AddOnScreenDebugMessage(0, 1.0f, FColor::Blue, *FString("TryAttack"));
+	UE_LOG(LogTemp, Warning, TEXT("OnAttack"));
+	Cast<AConclaveCharacter>(GetCharacter())->TryAttack();
 }

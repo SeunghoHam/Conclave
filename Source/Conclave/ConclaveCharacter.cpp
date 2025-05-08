@@ -11,10 +11,13 @@
 #include "Materials/Material.h"
 #include "Engine/World.h"
 
+
 #include "Kismet/GameplayStatics.h" // UGamePlayStatics::
 #include "ConclavePlayerController.h"
 
 #include "CharacterComponent/Inventory.h"
+
+#include "Animation/CharacterAnimInstance.h"
 
 #include "CharacterComponent/FirstCameraActor.h"
 #include "CharacterComponent/ThirdCameraActor.h"
@@ -53,6 +56,13 @@ AConclaveCharacter::AConclaveCharacter()
 	// 값 초기화
 	//ThirdCameraComponent->SetActive(true);
 	//TopDownCameraComponent->SetActive(false);
+}
+
+void AConclaveCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	AnimInstance = Cast<UCharacterAnimInstance>(GetMesh()->GetAnimInstance()); // Mesh가 가지고있는 ABP정보 가져오기
 }
 
 void AConclaveCharacter::Tick(float DeltaSeconds)
@@ -168,15 +178,16 @@ void AConclaveCharacter::CharacterInteract()
 	Inventory->Interfact();
 }
 
-void AConclaveCharacter::MeleeAttack()
+
+void AConclaveCharacter::TryAttack()
 {
-	bIsAttacking = true;
+	AnimInstance->ChangeCharacterAnimState(ECharacterAnimState::MeleeAttack);
 }
 
-void AConclaveCharacter::SetAttack(bool _value)
+
+void AConclaveCharacter::ResetAnimState()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Set Attack %d"), _value);
-	bIsAttacking = _value;
+	AnimInstance->OnStateAnimationEnds(ECharacterAnimState::MeleeAttack);
 }
 
 void AConclaveCharacter::InitTopDownCamera()
