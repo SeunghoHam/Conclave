@@ -42,9 +42,17 @@ public:
 	UPickUpComponent* PickupComponent;
 
 	
+
+
+	UFUNCTION()
+	USkeletalMeshComponent* GetWeaponSM() { return Weapon; }
+	
 	UFUNCTION()
 	void WeaponEnable(AConclaveCharacter* _character);
 
 	UFUNCTION()
 	void WeaponDisable(AConclaveCharacter* _character);
+
+private:
+	void WeaponInit();
 };

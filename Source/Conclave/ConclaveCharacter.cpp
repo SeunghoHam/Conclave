@@ -190,6 +190,17 @@ void AConclaveCharacter::ResetAnimState()
 	AnimInstance->OnStateAnimationEnds(ECharacterAnimState::MeleeAttack);
 }
 
+void AConclaveCharacter::AttachWeapon(USkeletalMeshComponent* weapon)
+{
+	bIsWeaponAttach = true;
+	if (CurrentWeapon == nullptr)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Attach"));
+		CurrentWeapon = weapon;	
+	}
+}
+
+
 void AConclaveCharacter::InitTopDownCamera()
 {
 	// Create a camera boom...

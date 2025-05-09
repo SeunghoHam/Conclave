@@ -33,14 +33,23 @@ void AWeaponBase::Tick(float DeltaTime)
 
 }
 
+void AWeaponBase::WeaponInit()
+{
+	FVector newLocation(0, 0, 2.5f);
+	FRotator newRotation(-84.0f, -73.0f, 87.2f);
+	//SetActorLocationAndRotation(newLocation, newRotation);
+	Weapon->SetRelativeLocationAndRotation(newLocation, newRotation);
+	//this->SetActorLocation();
+}
+
 void AWeaponBase::WeaponEnable(AConclaveCharacter* _character)
 {
-
 	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
 	Weapon->AttachToComponent(_character->GetMesh(), AttachmentRules, TEXT("GripPoint"));
 
 	Weapon->SetSimulatePhysics(false);
 	Weapon->SetEnableGravity(false);
+	WeaponInit();
 }
 
 void AWeaponBase::WeaponDisable(AConclaveCharacter* _character)

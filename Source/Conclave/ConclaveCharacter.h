@@ -87,6 +87,18 @@ public:
 	void TriggerAttackEnd();
 
 	void ResetAnimState();
+
+
+	UFUNCTION()
+	void AttachWeapon(USkeletalMeshComponent* weapon);
+
+
+	UFUNCTION(BlueprintCallable, Category = "Trigger", BlueprintPure)
+	bool GetWeaponIsAttach() { return bIsWeaponAttach; }
+
+
+	UFUNCTION(BlueprintCallable, Category = "Trigger", BlueprintPure)
+	USkeletalMeshComponent* GetCurrentWeapon() { if(CurrentWeapon != nullptr) return CurrentWeapon;  }
 private:
 	//FItemData Inventory_AddItem();
 
@@ -96,5 +108,8 @@ private:
 
 
 	UCharacterAnimInstance* AnimInstance;
+	
+	USkeletalMeshComponent* CurrentWeapon;
+	bool bIsWeaponAttach;
 };
 

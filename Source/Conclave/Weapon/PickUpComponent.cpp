@@ -42,8 +42,9 @@ void UPickUpComponent::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedCompo
 		OnPickUp.Broadcast(Character);
 		WeaponBase->WeaponEnable(Character);
 
+		
 		OnComponentBeginOverlap.RemoveAll(this);
-
+		Character->AttachWeapon(WeaponBase->GetWeaponSM());
 			/*
 		WeaponBase->enable
 		FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
